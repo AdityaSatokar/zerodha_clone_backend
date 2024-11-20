@@ -16,6 +16,7 @@ server.use(cors());
 server.use(bodyParser.json());
 
 server.get("/",async(req,res)=>{
+  await mongoose.connect(URL);
   res.json("welcome to zerodha backend");
 })
 
