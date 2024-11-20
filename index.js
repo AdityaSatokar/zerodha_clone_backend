@@ -25,22 +25,24 @@ async function connectDB(){
 
 server.get("/",async(req,res)=>{
   res.json("welcome to zerodha backend");
-  await connectDB();
 })
 
 server.get("/allHoldings",async(req,res)=>{
+  await connectDB();
   const allHoldings = await HoldingsModel.find({});
   console.log(allHoldings)
   res.json(allHoldings);
 });
 
 server.get("/allPositions",async(req,res)=>{
+  await connectDB();
   const allPositions = await PositionsModel.find({});
   console.log(allPositions)
   res.json(allPositions);
 });
 
 server.post("/newOrder",async(req,res)=>{
+  await connectDB();
   let newOrder = await new OrdersModel({
     name: req.body.name,
     qty: req.body.qty,
@@ -97,7 +99,7 @@ server.post("/newOrder",async(req,res)=>{
 const PORT = process.env.PORT || 3002;
 
 server.listen(PORT, () => {
-  mongoose.connect(URL);
+  await connectDB();
   console.log("Database connected");
   console.log(`server is listening on port ${PORT}`);
 });
