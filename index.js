@@ -15,27 +15,29 @@ const server = express();
 server.use(cors());
 server.use(bodyParser.json());
 
-server.get("/",async(req,res)=>{
+try{
   await mongoose.connect(URL);
+}catch(err){
+  console.log("error connecting to db");
+}
+
+server.get("/",async(req,res)=>{
   res.json("welcome to zerodha backend");
 })
 
 server.get("/allHoldings",async(req,res)=>{
-  await mongoose.connect(URL);
   const allHoldings = await HoldingsModel.find({});
   console.log(allHoldings)
   res.json(allHoldings);
 });
 
 server.get("/allPositions",async(req,res)=>{
-  await mongoose.connect(URL);
   const allPositions = await PositionsModel.find({});
   console.log(allPositions)
   res.json(allPositions);
 });
 
 server.post("/newOrder",async(req,res)=>{
-  await mongoose.connect(URL);
   let newOrder = await new OrdersModel({
     name: req.body.name,
     qty: req.body.qty,
