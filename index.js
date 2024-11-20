@@ -22,18 +22,21 @@ server.get("/",(req,res)=>{
 })
 
 server.get("/allHoldings",async(req,res)=>{
+  await mongoose.connect(URL);
   const allHoldings = await HoldingsModel.find({});
   console.log(allHoldings)
   res.json(allHoldings);
 });
 
 server.get("/allPositions",async(req,res)=>{
+  await mongoose.connect(URL);
   const allPositions = await PositionsModel.find({});
   console.log(allPositions)
   res.json(allPositions);
 });
 
 server.post("/newOrder",async(req,res)=>{
+  await mongoose.connect(URL);
   let newOrder = await new OrdersModel({
     name: req.body.name,
     qty: req.body.qty,
