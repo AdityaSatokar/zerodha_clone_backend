@@ -22,10 +22,10 @@ async function connectDB(){
     console.log("mongodb connection error!: "+err);
   }
 }
-connectDB();
 
-server.get("/",(req,res)=>{
+server.get("/",async(req,res)=>{
   res.json("welcome to zerodha backend");
+  await connectDB();
 })
 
 server.get("/allHoldings",async(req,res)=>{
