@@ -17,6 +17,10 @@ const server = express();
 server.use(cors());
 server.use(bodyParser.json());
 
+server.get("/",(req,res)=>{
+  res.json("welcome to zerodha backend");
+})
+
 server.get("/allHoldings",async(req,res)=>{
   const allHoldings = await HoldingsModel.find({});
   console.log(allHoldings)
