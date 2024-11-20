@@ -15,34 +15,26 @@ const server = express();
 server.use(cors());
 server.use(bodyParser.json());
 
-async function connectDB(){
-  try{
-    await mongoose.connect(URL);
-  }catch(err){
-    console.log("mongodb connection error!: "+err);
-  }
-}
-
 server.get("/",async(req,res)=>{
   res.json("welcome to zerodha backend");
 })
 
 server.get("/allHoldings",async(req,res)=>{
-  await connectDB();
+  await mongoose.connect(URL);
   const allHoldings = await HoldingsModel.find({});
   console.log(allHoldings)
   res.json(allHoldings);
 });
 
 server.get("/allPositions",async(req,res)=>{
-  await connectDB();
+  await mongoose.connect(URL);
   const allPositions = await PositionsModel.find({});
   console.log(allPositions)
   res.json(allPositions);
 });
 
 server.post("/newOrder",async(req,res)=>{
-  await connectDB();
+  await mongoose.connect(URL);
   let newOrder = await new OrdersModel({
     name: req.body.name,
     qty: req.body.qty,
@@ -99,7 +91,7 @@ server.post("/newOrder",async(req,res)=>{
 const PORT = process.env.PORT || 3002;
 
 server.listen(PORT, () => {
-  await connectDB();
+  await mongoose.connect(URL);
   console.log("Database connected");
   console.log(`server is listening on port ${PORT}`);
 });
