@@ -91,7 +91,7 @@ server.post("/newOrder",async(req,res)=>{
 
 const PORT = process.env.PORT || 3002;
 
-server.listen(PORT, () => {
+server.listen(PORT, async() => {
   await mongoose.connect(URL);
   console.log("Database connected");
   console.log(`server is listening on port ${PORT}`);
